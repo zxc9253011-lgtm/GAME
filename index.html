@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberPose: 雙人體感姿勢挑戰賽</title>
+    
+    <!-- Load TensorFlow.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <!-- Load Pose Detection Model -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection"></script>
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-creator.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <!-- 背景與攝影機畫面層 -->
+        <video id="webcam" autoplay playsinline></video>
+        
+        <!-- 畫布層：繪製形狀與人體骨架 -->
+        <canvas id="game-canvas"></canvas>
+
+        <!-- 遊戲 UI 疊加層 -->
+        <div id="ui-layer">
+            <header>
+                <div class="score-board player1">
+                    <div class="player-name">PLAYER 1</div>
+                    <div class="score" id="score-p1">0</div>
+                </div>
+                
+                <div class="center-info">
+                    <div class="logo">CYBER POSE</div>
+                    <div class="round-info" id="round-info">ROUND 1</div>
+                </div>
+
+                <div class="score-board player2">
+                    <div class="player-name">PLAYER 2</div>
+                    <div class="score" id="score-p2">0</div>
+                </div>
+            </header>
+
+            <div class="message-overlay" id="message-overlay">
+                <h1 id="main-message">準備好迎接挑戰</h1>
+                <p id="sub-message">請將電腦攝影機對準兩位玩家的全貌</p>
+                <div class="loading-status" id="loading-status">載入 AI 模型中...</div>
+                <button id="start-btn" class="neon-btn" style="display: none;">START GAME</button>
+                <button id="open-creator-btn" class="neon-btn secondary" style="display: none; margin-top: 15px;">CREATE SHAPE</button>
+            </div>
+            
+            <div class="flash-overlay" id="flash-overlay"></div>
+        </div>
+
+        <!-- 自訂形狀繪圖介面疊加層 -->
+        <div id="creator-overlay" style="display: none;">
+            <div class="creator-modal">
+                <h2>繪製自訂形狀</h2>
+                <p>在網格上拖曳滑鼠畫出發光的方塊！</p>
+                
+                <div class="creator-canvas-container">
+                    <canvas id="creator-canvas" width="400" height="400"></canvas>
+                </div>
+                
+                <div class="creator-controls">
+                    <button id="creator-clear" class="neon-btn small">清除</button>
+                    <button id="creator-save" class="neon-btn small primary">儲存</button>
+                    <button id="creator-close" class="neon-btn small danger">關閉</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 遊戲模組 -->
+    <script src="js/shapes.js"></script>
+    <script src="js/poseDetection.js"></script>
+    <script src="js/creator.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>
